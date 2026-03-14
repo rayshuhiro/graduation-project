@@ -1,0 +1,42 @@
+header {
+    width: 100%;
+    background-color: #FFF0F5; /* 背景の薄いピンク */
+}
+
+.header-inner {
+    position: relative;     /* ナビを配置する基準点になります */
+    max-width: 1200px;      /* デザインの全体幅に合わせて調整 */
+    margin: 0 auto;         /* ヘッダー全体を画面中央へ */
+    height: 400px;          /* カンプのヘッダー高さに合わせて調整 */
+    display: flex;
+    justify-content: center; /* ロゴを水平方向の中央に */
+    align-items: center;     /* ロゴを垂直方向の中央に */
+}
+
+.logo img {
+    width: 300px;           /* ロゴのサイズを調整 */
+    height: auto;
+}
+
+.main-nav {
+    position: absolute;     /* 浮かせて自由に配置 */
+    right: 50px;            /* 右端からの距離（Figmaの数値に合わせて調整） */
+    top: 50%;               /* 上から50%の位置へ */
+    transform: translateY(-50%); /* 自分の高さの半分だけ戻して完全に中央揃え */
+}
+
+.main-nav ul {
+    list-style: none;       /* 点を消す */
+}
+
+.main-nav li {
+    margin-bottom: 15px;    /* メニュー間の縦の隙間 */
+    font-size: 18px;
+    font-weight: bold;
+    color: #D65A8A;         /* 文字色（濃いピンク） */
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: inherit;
+}
