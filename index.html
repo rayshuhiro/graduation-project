@@ -290,6 +290,8 @@ videoB.src = videoSources[1];
 videoA.style.opacity = '1';
 videoB.style.opacity = '0';
 
+videoA.play(); // ★これが必要！ ページを開いた瞬間に1枚目を再生する合図です
+
 // フェードにかける時間（ミリ秒）
 const fadeTime = 2000; 
 
@@ -312,33 +314,6 @@ videoA.addEventListener('ended', () => {
 videoB.addEventListener('ended', () => {
    switchVideo(videoB, videoA);
 });
-
-// 動画が終わるタイミングでクロスフェードを実行
-// frontVideo.addEventListener('ended', crossFade);
-         // const videoElement = document.getElementById('loop-video');
-         //    // ここに使う動画のファイル名を2つ入れます
-         //    const videoSources = [
-         //       'video/nailist-movie.mp4', 
-         //       'video/naildesign-movie.mp4'
-         //    ];
-
-         //    let currentIndex = 0;
-
-         //    // 最初の動画をセットして再生
-         //    videoElement.src = videoSources[currentIndex];
-         //    videoElement.play();
-
-         //    // ★動画が終わった時のイベントをキャッチ
-         //    videoElement.addEventListener('ended', () => {
-         //       // 0なら1へ、1なら0へインデックスを切り替える
-         //       currentIndex = (currentIndex + 1) % videoSources.length;
-               
-         //       // 次の動画のパスをセット
-         //       videoElement.src = videoSources[currentIndex];
-               
-         //       // 再生を開始
-         //       videoElement.play();
-         //    });
       </script>
    </body>
 
