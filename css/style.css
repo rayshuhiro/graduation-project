@@ -1,0 +1,516 @@
+*{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+/* 1. 背景を画面いっぱいに固定 */
+.fixed-background {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100vh;
+   background-color: #FFF0F5; /* 薄いピンク
+   /* チェック柄の画像などがあればここへ */
+   z-index: -1; 
+}
+
+html {
+   scroll-behavior: smooth;
+}
+
+/* 2. スクロールさせるための外枠 */
+.scroll-wrapper {
+   width: 100%;
+   display: flex;
+   justify-content: center; /* 中央に寄せる */
+   z-index: 1;         /* 背景(-1)より大きい数字にします */
+} 
+
+/* 3. 真ん中の白いコンテンツエリア */
+.content-area {
+   width: 390px; /* カンプの幅（スマホ・PC共通なら適宜調整）に合わせて固定 */
+   background-color: #FFE0EA;
+   min-height: 100vh;
+   /* わかりやすいように入れるシャドウ */
+   box-shadow: 0 0 30px rgba(0, 0, 0, 0.5); 
+   position: 0 auto;
+   padding: 0;
+}
+
+body{
+   background-color: #FFF0F5;
+   font-family: "Helvetica Neue", Arial, "Hiragio kaku Gothic ProN", "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+   color: #333;
+}
+
+img {
+   display: block; /* これで解決することが多いです */
+}
+
+.header-inner{
+   display: flex;
+   align-items: center; /* 上下の中央揃え */
+   justify-content: center; /* 中身全体をまず中央に寄せる */
+   position: relative; /* 子要素の絶対配置の基準にするため（任意） */
+}
+
+/* .mv-ing{
+   width: 390px; 
+   height: auto; 
+   display: block;
+} */
+
+/* スライドショー全体のサイズ */
+.main-swiper {
+   width: 390px; /* 表示したい幅に合わせる */
+   height: auto;
+   position: relative;
+}
+
+.swiper-wrapper{
+   position: absolute;
+}
+
+/* CSS側のこの名前と、HTMLの class 名を一致させます */
+.overlay-text {
+   width: 100%;
+   height: auto;
+   padding: 20px;
+   position: absolute;
+   top: 60px; /* 位置の微調整はここで！ */
+   left: 50%;
+   transform: translateX(-50%);
+   z-index: 100;
+   pointer-events: none;
+}
+
+/* 画像のボケ対策：2倍サイズで書き出した画像を390pxに縮めて表示 */
+.hero-img {
+   width: 100%;
+   height: auto;
+   display: block;
+   /* 高解像度ディスプレイでクッキリ見せる魔法 */
+   /* image-rendering: -webkit-optimize-contrast; */
+}
+
+.midasi-mozi{
+   width: 379px;
+   height: 82px;
+}
+
+
+/* 動画：メイン画像から左に 350px ほど飛ばす */
+.video-window-box {
+   position: fixed;
+   left: 100px;           /* ここの数字で左への距離を微調整 */
+   top: 200px;
+   width: 278px;
+   height: 475px;
+   border-radius: 250px 250px 0 0;
+   overflow: hidden;
+}
+
+.mask-video {
+   width: 100%;
+   height: 100%;
+
+   object-fit: cover;
+   /* ★切り替えの滑らかさを1.5秒（1500ms）にして「もや〜っ」とさせます */
+   transition: opacity 1.5s ease-in-out;
+}
+
+/* ★追加：このクラスがついた時だけ透明にする */
+.video-fade-out {
+   opacity: 0;
+}
+
+/* 右側のメインコンテンツ（今の390pxのエリア） */
+.main-content-container {
+   width: 390px;
+   flex-shrink: 0;          /* 幅が潰れないように固定 */
+   position: relative;      /* ナビゲーションの基準になります */
+}
+
+/* ドットを可愛くするなら（任意） */
+.swiper-pagination-bullet-active {
+   background: #D65A8A !important; /* ブランドのピンク */
+}
+
+.first-ing{
+   width: 390px; /* 表示上の横幅 */
+   height: auto; /* 縦横比を維持 */
+   display: block;
+}
+
+.second-ing{
+   width: 390px; /* 表示上の横幅 */
+   height: auto; /* 縦横比を維持 */
+   display: block;
+}
+
+.third-ing{
+   width: 390px; /* 表示上の横幅 */
+   height: auto; /* 縦横比を維持 */
+   display: block;
+}
+
+.nav-list{
+   width: 163px;
+   position: fixed;
+   left: 959px;
+   top: 252px;
+   transform: translateY(-50%);
+
+   list-style: none;
+   padding: 0;
+   margin: 0;
+    /* 親からの text-align: center を打ち消す */
+   text-align: left;
+}
+
+/* .nav-list ul{
+   list-style: none;
+} */
+
+.nav-list li{
+   font-family: 'Italiana',serif;
+   /* color: #333;
+   font-size: 30px; */
+   list-style: none;
+   margin-bottom: 10px;
+   text-align: left;
+}
+
+.nav-list a{
+   text-decoration: none;
+   color: #333;
+   display: flex;       /* ハートと文字を横に並べる */
+   align-items: center; /* ハートと文字の上下中央を揃える */
+
+    /* ↓ ここが一番重要！絶対に改行させない */
+   white-space: nowrap; 
+   
+   font-size: 30px;
+   font-weight: bold;
+}
+
+.melting-chocolate {
+   width: 100%; /* 親である content-area (392px) いっぱいに広がる */
+   line-height: 0; /* 画像の下にできる隙間を防止 */
+}
+
+.choco-img {
+   width: 100%; /* 392pxぴったりに広がります */
+   height: auto;
+}
+
+.catchphrase {
+   background-color: #FFE0EA; /* 背景が白なら指定 */
+   padding: 40px 0; /* Figmaを見ながら上下の余白を調整してください */
+   display: flex;
+   justify-content: center;
+}
+
+.catch-img {
+   width: 80%; /* カンプを見て、392pxの中でどのくらいのサイズか調整 */
+   height: auto;
+}
+
+.common-obi {
+   width: 100%;
+   background-color: #FFE0EA; /* 共通の背景色 */
+   padding: 50px 0;           /* 共通の余白 */
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-top: 40px;          /* セクション間の隙間 */
+}
+
+h3{
+   font-family: 'Italiana',serif;
+   font-size: 30px;
+   color: #333333;
+   text-shadow: 2px 2px 4px #FF86C0;
+}
+
+.common-title{
+   width: 100%;
+   background-color: #FFE0EA;
+   padding: 70px 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   text-align: center;
+}
+
+.title{
+   font-family: 'Italiana',serif;
+   font-size: 55px;
+   color: #E91D7F;
+   line-height: 120%;
+}
+
+.milk{
+   position: relative;
+   width: 100%;
+}
+
+.milk-explain{
+   width: 326px;
+   position: absolute;
+   left: 16px;
+   top: 533px;
+
+   font-size: 16px;
+   color: #333333;
+   text-shadow: 2px 2px 4px #FF86C0;
+}
+
+.extra-style{
+   width: 100%;
+   background-image: url("../img/berry_back.png");
+   padding: 70px 0px;
+}
+
+.berry{
+   position: relative;
+   width: 100%;
+}
+
+.berry-explain{
+   width: 163px;
+   position: absolute;
+   left: 205px;
+   top: 255px;
+
+   font-size: 16px;
+   color: #333333;
+   text-shadow: 2px 2px 4px #D5282A;
+}
+
+.extra-style2{
+   width: 100%;
+   padding: 70px 0;
+   background: linear-gradient(#FFCECE, #FADCC4);
+}
+
+.orange{
+   position: relative;
+   width: 100%;
+}
+
+.orange-explain{
+   width: 163px;
+   position: absolute;
+   left: 214.5px;
+   top: 475px;
+
+   font-size: 16px;
+   color: #333333;
+   text-shadow: 2px 2px 4px #9A4800;
+}
+
+.nailist-comment{
+   width: 100%;
+   background-image: url("../img/dot-back.png");
+   background-repeat: repeat;
+   background-size: 15.5% auto;
+   padding: 50px 0 0 0;
+}
+
+.common-obi.no-back{
+   background-color: transparent;
+   margin-top: 0;
+}
+
+.message-box{
+   width: 360px;
+   margin: 0 auto;
+   padding: 55px 20px;
+   text-align: center;
+
+   line-height: 1.8;
+   color: #333;
+   font-size: 16px;
+}
+
+.common-obi.no-back2{
+   margin-top: 0;
+}
+
+.detail-main{
+   background-color: #FFE0EA;
+   padding: 50px 0 100px;
+}
+
+.detail-table-wrapper {
+   width: 341px;        /* Figmaのサイズに固定 */
+   margin: 40px auto;   /* 中央寄せ */
+}
+
+.size-swiper-container {
+    position: relative;     /* 矢印の配置基準 */
+    width: 300px;           /* コンテンツエリア全体の幅 */
+    margin: 35px auto;      /* 中央寄せ */
+}
+
+.size-guide-section {
+   width: 341px; /* 前回の Detail 表の幅に合わせると統一感が出ます */
+   margin: 30px auto;
+}
+
+
+.size-swiper {
+   width: 100%;
+   border-radius: 10px; /* 少し角を丸くすると可愛いです */
+   overflow: hidden;
+}
+
+.size-img {
+   width: 100%;
+   height: auto;
+   display: block;
+}
+
+/* 矢印のスタイルと配置 */
+.size-prev, .size-next {
+   color: #333333 !important; /* チョコブラウン */
+   top: 60% !important;
+   transform: translateY(-50%) scale(0.8);
+}
+
+/* 左矢印を親(392px)の左端へ */
+.size-prev {
+   left: -23px !important;
+   background-image: url(../img/back1.png);
+   background-repeat: no-repeat;
+}
+
+/* 右矢印を親(392px)の右端へ */
+.size-next {
+   right: -30px !important;
+   background-image: url(../img/next.png);
+   background-repeat: no-repeat;
+}
+
+/* 矢印の色をチョコブラウンにする */
+.size-swiper .swiper-button-next,
+.size-swiper .swiper-button-prev {
+   color: #5D3E35;
+   transform: scale(0.5); /* 少し小さくして上品に */
+}
+
+/* Swiperデフォルトの「く」の字を完全に消す魔法のコード */
+.size-swiper-container .swiper-button-next::after,
+.size-swiper-container .swiper-button-prev::after {
+   display: none !important;
+}
+
+/* .size{
+   padding: 50px;
+   display: flex;
+   justify-content: center;
+}
+
+.size-img{
+   width: 300px;
+   height: 300px;
+} */
+
+.spec-list {
+   border-top: 1px solid #333; /* 一番上の線（必要なら） */
+}
+
+.spec-item {
+   display: flex;       /* 項目と内容を横並びにする */
+   align-items: center; /* 上下の中心を揃える */
+   border-bottom: 1px solid #333; /* Figmaにある区切り線 */
+   padding: 15px 0;    /* 上下の余白 */
+}
+
+.spec-item dt {
+   width: 100px;        /* 「販売場所」などの項目の幅 */
+   font-weight: bold;
+   color: #333;      /* チョコブラウン */
+   font-size: 16px;
+}
+
+.spec-item dd {
+   flex: 1;             /* 残りの幅をすべて使う */
+   margin: 0;
+   color: #333;
+   font-size: 16px;
+   line-height: 1.5;    /* 行間を少し広げて読みやすく */
+}
+
+#faq{
+   background-color: #FFE0EA;
+}
+
+.faq-all{
+   padding: 0 0px 100px 0px;
+}
+
+.faq-container {
+   width: 333px; /* Figmaの幅に合わせる */
+   margin: 40px auto;
+}
+
+.faq-item {
+   background-image: url(../img/dot-back.png);
+   background-size: 15.5% auto;
+   border: 2px solid #333333; /* チョコ色の枠線 */
+   border-radius: 50px;       /* Figmaの「角の半径 50」 */
+   margin-bottom: 20px;       /* 項目間の隙間 */
+   overflow: hidden;          /* 中身がはみ出さないように */
+   list-style: none;          /* デフォルトの三角を消す */
+}
+
+/* 質問部分（クリックする場所） */
+.faq-question {
+   padding: 20px 30px;        /* Figmaのパディングに合わせる */
+   font-weight: bold;
+   color: #333;
+   cursor: pointer;
+   position: relative;        /* 矢印の基準 */
+   list-style: none;          /* Safari用 */
+}
+
+/* デフォルトの三角を消す（Chrome/Edge用） */
+.faq-question::-webkit-details-marker {
+   display: none;
+}
+
+/* 右側の矢印（画像を使う場合） */
+.arrow {
+   position: absolute;
+   right: 25px;
+   top: 50%;
+   transform: translateY(-50%);
+   width: 24px;
+   height: 24px;
+   background-image: url(../img/next.png); /* あなたの矢印画像 */
+   background-size: contain;
+   background-repeat: no-repeat;
+   transition: transform 0.3s; /* 動きを滑らかに */
+}
+
+/* 開いた時に矢印を回転させる */
+.faq-item[open] .arrow {
+   transform: translateY(-50%) rotate(90deg);
+}
+
+/* 回答部分（隠れている中身） */
+.faq-answer {
+   padding: 0 30px 20px 30px;
+   color: #333;
+   font-size: 14px;
+   line-height: 1.6;
+}
+
+.footer{
+   padding: 50px;
+   text-align: center;
+}
+
